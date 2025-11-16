@@ -1,5 +1,8 @@
+import ThemeProvider from "@providers/ThemeProvider";
 import router from "@routes/router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 import { RouterProvider } from "react-router";
 
 const queryClient = new QueryClient({
@@ -17,9 +20,15 @@ const queryClient = new QueryClient({
 
 function App() {
 	return (
-		<QueryClientProvider client={queryClient}>
-			<RouterProvider router={router} />
-		</QueryClientProvider>
+		<ErrorBoundary fallbackRender={() => <div>에러</div>}>
+			<Suspense fallback={<div>fallback</div>}>
+				<QueryClientProvider client={queryClient}>
+					<ThemeProvider>
+						<RouterProvider router={router} />
+					</ThemeProvider>
+				</QueryClientProvider>
+			</Suspense>
+		</ErrorBoundary>
 	);
 }
 
