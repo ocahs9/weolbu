@@ -1,13 +1,20 @@
+import Index from "@pages/Index";
 import Detail from "@pages/main/detail/Detail";
 import Main from "@pages/main/Main";
 import Mypage from "@pages/mypage/Mypage";
 import { createBrowserRouter } from "react-router";
+import IndexLayout from "./layout/IndexLayout";
 import { MainLayout } from "./layout/MainLayout";
 import NotFound from "./NotFound";
 import { PATH } from "./PATH";
 
 const router = createBrowserRouter([
 	{ path: "*", Component: NotFound },
+	{
+		path: PATH.ROOT,
+		Component: IndexLayout,
+		children: [{ index: true, Component: Index }],
+	},
 	{
 		path: PATH.MAIN,
 		Component: MainLayout,
