@@ -88,7 +88,7 @@ globalStyle("input", {
 	height: "48px",
 	fontFamily: "Spoqa, Malgun Gothic, sans-serif",
 	fontWeight: 400,
-	fontSize: "16px",
+	// fontSize: "16px",
 	lineHeight: "1",
 	color: "#222",
 	letterSpacing: "-.7px",

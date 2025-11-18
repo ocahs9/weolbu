@@ -1,4 +1,5 @@
 import { globalStyle } from "@vanilla-extract/css";
+import "./reset.css";
 export const sizeOfRem = 10;
 
 // ===== HTML 전역 스타일 =====
@@ -34,7 +35,7 @@ globalStyle("body", {
 globalStyle("body", {
 	width: "100%",
 
-    //media 쿼리용 예시
+	//media 쿼리용 예시
 	// "@media": {
 	// 	"screen and (max-width: 767px)": {
 	// 		minWidth: "375px",

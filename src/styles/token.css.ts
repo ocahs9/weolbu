@@ -225,3 +225,13 @@ export const layout = createGlobalTheme(":root", {
 		height: "80px",
 	},
 });
+
+export const zIndex = createGlobalTheme(":root", {
+	base: "0",
+	header: "10",
+	dropdown: "100",
+	sticky: "500",
+	overlay: "1000",
+	modal: "2000",
+	tooltip: "9999",
+});
