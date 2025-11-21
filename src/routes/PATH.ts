@@ -48,5 +48,7 @@ function definePath<
 		readonly [K in keyof Children]: `${PathType<Base>}${PathType<Children[K]>}`;
 	};
 
-	return Object.assign(_base, mapped) as Base & typeof mapped;
+	const retObj = Object.assign(_base, mapped) as Base & typeof mapped;
+
+	return retObj;
 }
