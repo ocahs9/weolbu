@@ -1,6 +1,7 @@
 //noti: 경로는 항상 PATH를 import 해서 사용할 것
 export const PATH = {
 	ROOT: "/",
+	SIGNUP: definePath("/signup", {}),
 	MAIN: definePath("/main", {
 		DETAIL: "/detail",
 		LIST: "/list",

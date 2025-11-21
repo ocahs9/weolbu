@@ -1,10 +1,8 @@
 import Index from "@pages/Index";
-import Detail from "@pages/main/detail/Detail";
-import Main from "@pages/main/Main";
 import Mypage from "@pages/mypage/Mypage";
+import SignUp from "@pages/signup/Signup";
 import { createBrowserRouter } from "react-router";
 import IndexLayout from "./layout/IndexLayout";
-import { MainLayout } from "./layout/MainLayout";
 import NotFound from "./NotFound";
 import { PATH } from "./PATH";
 
@@ -16,18 +14,8 @@ const router = createBrowserRouter([
 		children: [{ index: true, Component: Index }],
 	},
 	{
-		path: PATH.MAIN,
-		Component: MainLayout,
-		children: [
-			{
-				index: true,
-				Component: Main,
-			},
-			{
-				path: PATH.MAIN.DETAIL,
-				Component: Detail,
-			},
-		],
+		path: PATH.SIGNUP,
+		Component: SignUp,
 	},
 	{
 		path: PATH.MYPAGE,
