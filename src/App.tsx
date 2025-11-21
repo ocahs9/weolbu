@@ -3,6 +3,8 @@ import router from "@routes/router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import React, { Suspense } from "react";
 import { RouterProvider } from "react-router";
+import { Button, Container, Reshaped } from "reshaped";
+import "reshaped/themes/slate/theme.css";
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -22,7 +24,9 @@ function App() {
 		<Suspense fallback={<div>fallback</div>}>
 			<QueryClientProvider client={queryClient}>
 				<ThemeProvider>
-					<RouterProvider router={router} />
+					<Reshaped theme="slate" defaultColorMode="light">
+						<RouterProvider router={router} />
+					</Reshaped>
 				</ThemeProvider>
 			</QueryClientProvider>
 		</Suspense>
