@@ -78,28 +78,33 @@ globalStyle("img", {
 
 /* Input, Textarea 리셋 */
 globalStyle("input, textarea", {
-	border: 0,
-	outline: 0,
-	verticalAlign: "middle",
+	// border: 0,
+	// outline: 0,
+	// verticalAlign: "middle",
 });
 
 globalStyle("input", {
-	padding: "3px 12px",
-	height: "48px",
-	fontFamily: "Spoqa, Malgun Gothic, sans-serif",
-	fontWeight: 400,
+	fontFamily: "var(--rs-font-family-featured-2) !important",
+	fontSize: "var(--rs-font-size-featured-2) !important",
+	fontWeight: "var(--rs-font-weight-regular) !important",
+	letterSpacing: "var(--rs-letter-spacing-featured-2) !important",
+	lineHeight: "var(--rs-line-height-featured-2) !important",
+	// padding: "3px 12px",
+	// height: "48px",
+	// fontFamily: "Spoqa, Malgun Gothic, sans-serif",
+	// fontWeight: 400,
 	// fontSize: "16px",
-	lineHeight: "1",
-	color: "#222",
-	letterSpacing: "-.7px",
+	// lineHeight: "1",
+	// color: "#222",
+	// letterSpacing: "-.7px",
 });
 
 globalStyle(
 	"input[type='text'] input[type=email], input[type=number], input[type=password],",
 	{
-		width: "100%",
-		background: "#f7f7f7",
-		border: "1px solid #f7f7f7",
+		// width: "100%",
+		// background: "#f7f7f7",
+		// border: "1px solid #f7f7f7",
 		WebkitAppearance: "none",
 		WebkitBoxShadow: "none",
 		boxShadow: "none",
