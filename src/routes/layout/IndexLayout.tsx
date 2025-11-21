@@ -1,11 +1,11 @@
-import Header from "@shared/components/Header";
+import Header from "@shared/components/Header/Header";
 import React from "react";
 import { Outlet } from "react-router";
 
 function IndexLayout() {
 	return (
 		<>
-			<Header title="인덱스" onClickLeft={() => {}} onClickRight={() => {}} />
+			{/* <Header title="인덱스" onClickLeft={() => {}} onClickRight={() => {}} /> */}
 			<Outlet />
 		</>
 	);
