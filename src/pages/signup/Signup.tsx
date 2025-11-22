@@ -3,6 +3,7 @@ import InputController from "@shared/components/InputController/InputController"
 import Loading from "@shared/components/Loading/Loading";
 import RadioController from "@shared/components/RadioController/RadioController";
 import { passwordSchema } from "@shared/schema";
+import { phoneNumberFormatter, phoneNumberUnformatter } from "@shared/utils";
 import { useRef, useState } from "react";
 import { Lock, Mail, Phone, User } from "react-feather";
 import { Button, Container, Text } from "reshaped";
@@ -31,11 +32,11 @@ function SignUp() {
 
 		setIsLoading(true);
 		console.log({
-			nameValueRef,
-			emailValueRef,
-			phoneNumberValueRef,
-			passwordValueRef,
-			genderValueRef,
+			nameValueRef: nameValueRef.current,
+			emailValueRef: emailValueRef.current,
+			phoneNumber: phoneNumberUnformatter(phoneNumberValueRef.current),
+			passwordValueRef: passwordValueRef.current,
+			genderValueRef: genderValueRef.current,
 		});
 	};
 
@@ -49,6 +50,7 @@ function SignUp() {
 					label="휴대폰 번호"
 					valueRef={phoneNumberValueRef}
 					icon={Phone}
+					formatter={phoneNumberFormatter}
 				/>
 				<InputController
 					label="비밀번호"
