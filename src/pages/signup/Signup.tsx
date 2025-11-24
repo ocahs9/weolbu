@@ -4,19 +4,26 @@ import Loading from "@shared/components/Loading/Loading";
 import RadioController from "@shared/components/RadioController/RadioController";
 import { passwordSchema } from "@shared/schema";
 import { phoneNumberFormatter, phoneNumberUnformatter } from "@shared/utils";
+
 import { useRef, useState } from "react";
 import { Lock, Mail, Phone, User } from "react-feather";
 import { Button, Container, Text } from "reshaped";
 import * as styles from "./Signup.css";
+
+async function fetchItems() {
+	const res = await fetch(`/api/items`);
+	console.log(await res.json());
+}
 
 function SignUp() {
 	const nameValueRef = useRef("");
 	const emailValueRef = useRef("");
 	const phoneNumberValueRef = useRef("");
 	const passwordValueRef = useRef("");
-	const genderValueRef = useRef("");
+	const memberTypeRef = useRef("");
 
 	const [isLoading, setIsLoading] = useState(false);
+	fetchItems();
 
 	const handleSubmit = () => {
 		if (
@@ -24,7 +31,7 @@ function SignUp() {
 			!emailValueRef.current ||
 			!phoneNumberValueRef.current ||
 			!passwordValueRef.current ||
-			!genderValueRef.current
+			!memberTypeRef.current
 		) {
 			alert("모든 필수 정보를 입력해주세요.");
 			return;
@@ -36,7 +43,7 @@ function SignUp() {
 			emailValueRef: emailValueRef.current,
 			phoneNumber: phoneNumberUnformatter(phoneNumberValueRef.current),
 			passwordValueRef: passwordValueRef.current,
-			genderValueRef: genderValueRef.current,
+			memberTypeRef: memberTypeRef.current,
 		});
 	};
 
@@ -60,12 +67,12 @@ function SignUp() {
 					icon={Lock}
 				/>
 				<RadioController
-					name="성별"
+					name="회원 유형"
 					radioItems={[
-						{ label: "남자", value: "male" },
-						{ label: "여자", value: "female" },
+						{ label: "수강생", value: "tutee" },
+						{ label: "강사", value: "tutor" },
 					]}
-					valueRef={genderValueRef}
+					valueRef={memberTypeRef}
 				/>
 				<Button
 					className={styles.btn}
