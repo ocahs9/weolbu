@@ -2,6 +2,7 @@
 export const PATH = {
 	ROOT: "/",
 	SIGNUP: definePath("/signup", {}),
+	COURSE_CREATION: definePath("/course-creation", {}),
 	MAIN: definePath("/main", {
 		DETAIL: "/detail",
 		LIST: "/list",

@@ -1,3 +1,4 @@
+import CourseCreation from "@pages/cource-creation/CourseCreation";
 import Index from "@pages/Index";
 import Mypage from "@pages/mypage/Mypage";
 import SignUp from "@pages/signup/Signup";
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
 	{
 		path: PATH.SIGNUP,
 		Component: SignUp,
+	},
+	{
+		path: PATH.COURSE_CREATION,
+		Component: CourseCreation,
 	},
 	{
 		path: PATH.MYPAGE,
