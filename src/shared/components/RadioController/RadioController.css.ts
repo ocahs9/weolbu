@@ -1,6 +1,7 @@
 import { style } from "@vanilla-extract/css";
 
 export const radioControllerContainer = style({
+	maxWidth: "60rem !important",
 	width: "100%",
 	padding: "0",
 	marginTop: "2rem",
