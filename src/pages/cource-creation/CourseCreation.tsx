@@ -1,6 +1,7 @@
 import Header from "@shared/components/Header/Header";
 import InputController from "@shared/components/InputController/InputController";
 import Loading from "@shared/components/Loading/Loading";
+import { numberFormatter, priceFormatter } from "@shared/utils";
 import React, { useRef } from "react";
 import { DollarSign, PenTool, UserPlus } from "react-feather";
 import { Button, Container, Text } from "reshaped";
@@ -31,8 +32,16 @@ function CourseCreation() {
 					label="수강 인원"
 					valueRef={numberOfStudents}
 					icon={UserPlus}
+					formatter={numberFormatter}
+					suffix={"명"}
 				/>
-				<InputController label="가격" valueRef={price} icon={DollarSign} />
+				<InputController
+					label="가격"
+					valueRef={price}
+					icon={DollarSign}
+					formatter={priceFormatter}
+					suffix={"원"}
+				/>
 				<Button
 					className={styles.btn}
 					type="submit"

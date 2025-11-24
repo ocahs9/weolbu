@@ -63,7 +63,7 @@ function SignUp() {
 					label="비밀번호"
 					valueRef={passwordValueRef}
 					schema={passwordSchema}
-					password
+					inputAttributes={{ type: "password" }}
 					icon={Lock}
 				/>
 				<RadioController

@@ -11,12 +11,21 @@ interface InputControllerProps {
 	schema?: ZodString;
 	formatter?: (value: string) => string;
 	placeholder?: string;
-	password?: boolean;
+	inputAttributes?: React.InputHTMLAttributes<HTMLInputElement>;
+	suffix?: string;
 }
 
 function InputController(props: InputControllerProps) {
-	const { label, placeholder, valueRef, schema, password, icon, formatter } =
-		props;
+	const {
+		label,
+		placeholder,
+		valueRef,
+		schema,
+		inputAttributes,
+		icon,
+		formatter,
+		suffix,
+	} = props;
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 	const [controlledValue, setControlledValue] = useState<string>("");
 
@@ -47,13 +56,14 @@ function InputController(props: InputControllerProps) {
 					</Text>
 				</FormControl.Label>
 				<TextField
-					inputAttributes={{ type: password ? "password" : "text" }}
+					inputAttributes={{ ...inputAttributes }}
 					icon={icon ? icon : undefined}
 					name={label}
 					placeholder={`${placeholder ? placeholder : `${label}을 입력해주세요.`}`}
 					size={"xlarge"}
 					onChange={onChange}
 					value={formatter ? controlledValue : undefined}
+					suffix={suffix ? suffix : undefined}
 				/>
 				<FormControl.Error>
 					<Text variant={"featured-3"} className={styles.formText}>
