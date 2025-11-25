@@ -1,7 +1,8 @@
 import { usePostApplyCourse } from "@apis/hooks";
 import type { Course } from "@apis/types";
 import Header from "@shared/components/Header/Header";
-import { useState } from "react";
+import Loading from "@shared/components/Loading/Loading";
+import { Suspense, useState } from "react";
 import { Button, Container, Text } from "reshaped";
 import CourseItems from "./_component/CourseItems";
 import * as styles from "./ApplyCourse.css";
@@ -36,10 +37,16 @@ function ApplyCourse() {
 	return (
 		<Container className={styles.bodyContainer}>
 			<Header title="강의 목록" />
-			<CourseItems
-				handleSelectCourse={handleSelectCourse}
-				selectedCourses={selectedCourses}
-			/>
+			<Suspense
+				fallback={
+					<Loading color={"primary"} size={"large"} marginTop={"2rem"} />
+				}
+			>
+				<CourseItems
+					handleSelectCourse={handleSelectCourse}
+					selectedCourses={selectedCourses}
+				/>
+			</Suspense>
 			<Button
 				className={styles.btn}
 				type="submit"

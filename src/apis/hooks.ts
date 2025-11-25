@@ -1,9 +1,8 @@
 import type { CourseCreationType, SignUpMemberType } from "@apis/types";
 import {
-	useInfiniteQuery,
 	useMutation,
-	useQuery,
 	useQueryClient,
+	useSuspenseInfiniteQuery,
 	useSuspenseQuery,
 } from "@tanstack/react-query";
 import * as apis from "./apis";
@@ -13,7 +12,7 @@ export const useInfiniteGetCourses = (queryParams: {
 	page?: number;
 	limit?: number;
 }) => {
-	return useInfiniteQuery({
+	return useSuspenseInfiniteQuery({
 		queryKey: queryKeys.GET_COURSES_QUERY_KEY(),
 		initialPageParam: queryParams.page ?? 1,
 		queryFn: ({ pageParam }) =>
