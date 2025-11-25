@@ -1,6 +1,6 @@
+import ApplyCourse from "@pages/apply-course/ApplyCourse";
 import CourseCreation from "@pages/cource-creation/CourseCreation";
 import Index from "@pages/Index";
-import Mypage from "@pages/mypage/Mypage";
 import SignUp from "@pages/signup/Signup";
 import { createBrowserRouter } from "react-router";
 import IndexLayout from "./layout/IndexLayout";
@@ -15,16 +15,16 @@ const router = createBrowserRouter([
 		children: [{ index: true, Component: Index }],
 	},
 	{
-		path: PATH.SIGNUP,
+		path: PATH.SIGNUP.ROOT,
 		Component: SignUp,
 	},
 	{
-		path: PATH.COURSE_CREATION,
+		path: PATH.COURSE_CREATION.ROOT,
 		Component: CourseCreation,
 	},
 	{
-		path: PATH.MYPAGE,
-		Component: Mypage,
+		path: PATH.APPLY_COURSE.ROOT,
+		Component: ApplyCourse,
 	},
 ]);
 

@@ -3,11 +3,11 @@ export const PATH = {
 	ROOT: "/",
 	SIGNUP: definePath("/signup", {}),
 	COURSE_CREATION: definePath("/course-creation", {}),
-	MAIN: definePath("/main", {
-		DETAIL: "/detail",
-		LIST: "/list",
-	}),
-	MYPAGE: definePath("/mypage", {}),
+	APPLY_COURSE: definePath("/apply-course", {}),
+	// MAIN: definePath("/main", {
+	// 	DETAIL: "/detail",
+	// 	LIST: "/list",
+	// }),
 } as const;
 
 //
@@ -37,7 +37,7 @@ function definePath<
 >(
 	base: Base,
 	children: Children,
-): Base & {
+): { ROOT: Base } & {
 	readonly [K in keyof Children]: `${PathType<Base>}${PathType<Children[K]>}`;
 } {
 	const _base = base.startsWith("/") ? base : `/${base}`;
@@ -50,7 +50,9 @@ function definePath<
 		readonly [K in keyof Children]: `${PathType<Base>}${PathType<Children[K]>}`;
 	};
 
-	const retObj = Object.assign(_base, mapped) as Base & typeof mapped;
+	const retObj = Object.assign({ ROOT: _base }, mapped) as {
+		ROOT: Base;
+	} & typeof mapped;
 
 	return retObj;
 }
