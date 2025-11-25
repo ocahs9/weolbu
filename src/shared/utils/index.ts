@@ -27,14 +27,20 @@ export const phoneNumberUnformatter = (phoneNumber: string) => {
 //세자리 단위로 , 찍는 유틸리티 함수
 export const priceFormatter = (price: string) => {
 	const _price = numberFormatter(price);
-	if (_price.length < 3) return _price;
+	if (_price.length <= 3) return _price;
 
-	let ret = "";
-	for (let i = _price.length - 1; i >= 0; i--) {
-		ret = _price[i] + ret;
-		if (i !== 0 && i % 3 === 0) ret = `,${ret}`;
+	// 뒤집어서 3자리 단위로 콤마 추가
+	const reversed = _price.split("").reverse();
+	let result = [];
+
+	for (let i = 0; i < reversed.length; i++) {
+		result.push(reversed[i]);
+		if ((i + 1) % 3 === 0 && i !== reversed.length - 1) {
+			result.push(",");
+		}
 	}
-	return ret;
+
+	return result.reverse().join("");
 };
 
 export const priceUnformatter = (price: string) => {
