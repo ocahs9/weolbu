@@ -13,10 +13,14 @@ import { Suspense, useState } from "react";
 import { useNavigate } from "react-router";
 import { Button, Container, Text } from "reshaped";
 import CourseItems from "./_component/CourseItems";
+import SortBox from "./_component/SortBox";
 import * as styles from "./ApplyCourse.css";
+import type { SortType } from "./types";
 
 function ApplyCourse() {
 	const [selectedCourses, setSelectedCourses] = useState<Course[]>([]);
+	const [selectedSorts, setSelectedSorts] = useState<SortType[]>([]);
+
 	const { data: myinfo } = useGetMyInfo();
 	const { mutateAsync: applyCourse } = usePostApplyCourse();
 	const navigate = useNavigate();
@@ -28,6 +32,17 @@ function ApplyCourse() {
 			}
 			return [...prev, course];
 		});
+	};
+
+	const handleSortChange = (value: string | undefined) => {
+		if (value) {
+			setSelectedSorts((prev) => {
+				if (prev.includes(value)) {
+					return prev.filter((v) => v !== value);
+				}
+				return [...prev, value];
+			});
+		}
 	};
 
 	const handleCreateCourse = () => {
@@ -51,6 +66,14 @@ function ApplyCourse() {
 	return (
 		<Container className={styles.bodyContainer}>
 			<Header title="강의 목록" />
+			<SortBox
+				sortItems={[
+					{ label: "최근 등록순", value: "latest" },
+					{ label: "신청자 많은순", value: "most-applicants" },
+					{ label: "신청률 높은순", value: "highest-acceptance-rate" },
+				]}
+				handleSortChange={handleSortChange}
+			/>
 			<Suspense
 				fallback={
 					<Loading color={"primary"} size={"large"} marginTop={"2rem"} />
@@ -59,6 +82,7 @@ function ApplyCourse() {
 				<CourseItems
 					handleSelectCourse={handleSelectCourse}
 					selectedCourses={selectedCourses}
+					selectedSorts={selectedSorts}
 				/>
 			</Suspense>
 			<Button

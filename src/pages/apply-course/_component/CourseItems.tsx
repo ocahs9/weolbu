@@ -1,22 +1,31 @@
 import { useInfiniteGetCourses } from "@apis/hooks";
 import type { Course } from "@apis/types";
 import { priceFormatter } from "@shared/utils";
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { Card, Checkbox, Text, View } from "reshaped";
+import type { SortType } from "../types";
 import * as styles from "./CourseItems.css";
 
 interface CourseItemsProps {
 	handleSelectCourse: (course: Course) => void;
 	selectedCourses: Course[];
+	selectedSorts: SortType[];
 }
 
 function CourseItems(props: CourseItemsProps) {
-	const { handleSelectCourse, selectedCourses } = props;
+	const { handleSelectCourse, selectedCourses, selectedSorts } = props;
 
 	const { data, fetchNextPage, hasNextPage } = useInfiniteGetCourses({
 		page: 1,
 		limit: 10,
 	});
+
+	// const renderedCourses = useMemo(() => {
+	// 	return applySort(
+	// 		data?.pages.map((page) => page.courses.map),
+	// 		selectedSorts,
+	// 	);
+	// }, [selectedSorts]);
 
 	const observerRef = useRef<IntersectionObserver | null>(null);
 	const loadMoreRef = useRef<HTMLDivElement>(null);
@@ -84,6 +93,9 @@ function CourseCard(props: CourseCardProps) {
 		selected,
 		onClick,
 	} = props;
+
+	console.log(coursePrice);
+	console.log(typeof coursePrice);
 
 	return (
 		<Card
