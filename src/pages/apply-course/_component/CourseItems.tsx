@@ -1,10 +1,18 @@
 import { useInfiniteGetCourses } from "@apis/hooks";
+import type { Course } from "@apis/types";
 import { priceFormatter } from "@shared/utils";
 import { useEffect, useRef } from "react";
-import { Card, Checkbox, Text, useToggle, View } from "reshaped";
+import { Card, Checkbox, Text, View } from "reshaped";
 import * as styles from "./CourseItems.css";
 
-function CourseItems() {
+interface CourseItemsProps {
+	handleSelectCourse: (course: Course) => void;
+	selectedCourses: Course[];
+}
+
+function CourseItems(props: CourseItemsProps) {
+	const { handleSelectCourse, selectedCourses } = props;
+
 	const { data, fetchNextPage, hasNextPage } = useInfiniteGetCourses({
 		page: 1,
 		limit: 10,
@@ -42,6 +50,10 @@ function CourseItems() {
 						courseTutor={course.tutorName}
 						numberOfStudents={course.numberOfStudents}
 						maxOfStudents={course.maxOfStudents}
+						selected={selectedCourses.some(
+							(c) => c.courseId === course.courseId,
+						)}
+						onClick={() => handleSelectCourse(course)}
 					/>
 				)),
 			)}
@@ -58,6 +70,8 @@ interface CourseCardProps {
 	courseTutor: string;
 	numberOfStudents: number;
 	maxOfStudents: number;
+	selected: boolean;
+	onClick: () => void;
 }
 
 function CourseCard(props: CourseCardProps) {
@@ -67,19 +81,22 @@ function CourseCard(props: CourseCardProps) {
 		courseTutor,
 		numberOfStudents,
 		maxOfStudents,
+		selected,
+		onClick,
 	} = props;
 
-	const selected = useToggle(false);
-
 	return (
-		<Card as="label" selected={selected.active} className={styles.cardClass}>
+		<Card
+			as="label"
+			selected={selected}
+			className={styles.cardClass}
+			onClick={onClick}
+		>
 			<View gap={3} direction="row" align="center" className={styles.cardView}>
 				<Checkbox
 					value={courseName}
-					checked={selected.active}
-					onChange={({ checked }) =>
-						checked ? selected.activate() : selected.deactivate()
-					}
+					checked={selected}
+					onChange={onClick}
 					name={courseName}
 				/>
 				<View.Item grow className={styles.cardContent}>

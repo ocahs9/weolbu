@@ -40,10 +40,10 @@ export const usePostSignup = () => {
 	});
 };
 
-export const usePostApplyCourse = (courseId: string) => {
+export const usePostApplyCourse = () => {
 	const queryClient = useQueryClient();
 	return useMutation({
-		mutationFn: () => apis.postApplyCourse(courseId),
+		mutationFn: (courseId: string) => apis.postApplyCourse(courseId),
 		onSuccess: () => {
 			queryClient.invalidateQueries({
 				queryKey: queryKeys.GET_COURSES_QUERY_KEY(),
