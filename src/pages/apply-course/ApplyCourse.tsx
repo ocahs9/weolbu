@@ -1,15 +1,25 @@
-import { usePostApplyCourse } from "@apis/hooks";
+import {
+	useGetMemberInfo,
+	useGetMyInfo,
+	usePostApplyCourse,
+} from "@apis/hooks";
 import type { Course } from "@apis/types";
+import { PATH } from "@routes/PATH";
 import Header from "@shared/components/Header/Header";
 import Loading from "@shared/components/Loading/Loading";
+import ProtectedPage from "@shared/components/ProtectedRouteCreationPage";
+import { motion } from "framer-motion";
 import { Suspense, useState } from "react";
+import { useNavigate } from "react-router";
 import { Button, Container, Text } from "reshaped";
 import CourseItems from "./_component/CourseItems";
 import * as styles from "./ApplyCourse.css";
 
 function ApplyCourse() {
 	const [selectedCourses, setSelectedCourses] = useState<Course[]>([]);
+	const { data: myinfo } = useGetMyInfo();
 	const { mutateAsync: applyCourse } = usePostApplyCourse();
+	const navigate = useNavigate();
 
 	const handleSelectCourse = (course: Course) => {
 		setSelectedCourses((prev) => {
@@ -18,6 +28,10 @@ function ApplyCourse() {
 			}
 			return [...prev, course];
 		});
+	};
+
+	const handleCreateCourse = () => {
+		navigate(PATH.COURSE_CREATION.ROOT);
 	};
 
 	//만약 실패를 반환하는 경우에는? -> 동기적으로 에러나 프로미스가 throw되면 맛이가지만, 비동기적이라 어플리케이션이 맛가지는 않는다.
@@ -57,8 +71,45 @@ function ApplyCourse() {
 			>
 				<Text variant={"featured-2"}>수강 신청하기</Text>
 			</Button>
+
+			{myinfo.memberType === "tutor" && (
+				<motion.div
+					animate={{
+						y: [0, -5, 0],
+					}}
+					transition={{
+						duration: 2,
+						repeat: Number.POSITIVE_INFINITY,
+						ease: "easeInOut",
+					}}
+					className={styles.addCourseBtnWrapper}
+				>
+					<Button
+						color={"critical"}
+						variant={"faded"}
+						size={"large"}
+						onClick={handleCreateCourse}
+						className={styles.addCourseBtn}
+					>
+						<span className={styles.btnText}>
+							<Text variant={"featured-2"} className={styles.plusIcon}>
+								+
+							</Text>
+							<Text variant={"featured-2"} className={styles.btnLabel}>
+								강의 등록
+							</Text>
+						</span>
+					</Button>
+				</motion.div>
+			)}
 		</Container>
 	);
 }
 
-export default ApplyCourse;
+export default function ApplyCourseWrapper() {
+	return (
+		<ProtectedPage>
+			<ApplyCourse />
+		</ProtectedPage>
+	);
+}
