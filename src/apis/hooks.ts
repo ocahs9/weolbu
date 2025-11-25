@@ -26,10 +26,17 @@ export const useInfiniteGetCourses = (queryParams: {
 	});
 };
 
-export const useGetMemberInfo = (id: number) => {
+export const useGetMemberInfo = (id: number | undefined) => {
 	return useSuspenseQuery({
 		queryKey: queryKeys.GET_MEMBER_INFO_QUERY_KEY(id),
 		queryFn: () => apis.getMemberInfo(id),
+	});
+};
+
+export const useGetMyInfo = () => {
+	return useSuspenseQuery({
+		queryKey: queryKeys.GET_MEMBER_INFO_QUERY_KEY(),
+		queryFn: () => apis.getMyInfo(),
 	});
 };
 

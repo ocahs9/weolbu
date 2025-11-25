@@ -8,8 +8,13 @@ export const postMemberSignup = async (body: type.SignUpMemberType) => {
 	return res.data.data;
 };
 
-export const getMemberInfo = async (id: number) => {
+export const getMemberInfo = async (id: number | undefined) => {
 	const res = await get<type.MemberInfo>(`${API_PATH.MEMBERS}/${id}`);
+	return res.data.data;
+};
+
+export const getMyInfo = async () => {
+	const res = await get<type.MemberInfo>(`${API_PATH.MEMBERS}/${API_PATH.ME}`);
 	return res.data.data;
 };
 

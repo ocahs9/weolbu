@@ -3,4 +3,5 @@ export const API_PATH = {
 	MEMBERS: "members",
 	COURSES: "courses",
 	APPLY: "apply",
+	ME: "me",
 };

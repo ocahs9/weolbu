@@ -283,6 +283,23 @@ export const handlers = [
 		});
 	}),
 
+	http.get("api/members/me", ({ request }) => {
+		const authorization = request.headers.get("Authorization");
+		const accessToken = authorization?.split(" ")[1];
+		const member = memeberDB.find((m) => m.accessToken === accessToken);
+		if (!member) {
+			return HttpResponse.json(
+				{ error: "Invalid access token" },
+				{ status: 401 },
+			);
+		}
+		return HttpResponse.json({
+			code: 200,
+			message: "success",
+			data: member,
+		});
+	}),
+
 	// 2. 회원정보 조회 GET
 	http.get("/api/members/:id", ({ params }) => {
 		const { id } = params;
