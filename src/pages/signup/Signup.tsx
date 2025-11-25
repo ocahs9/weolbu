@@ -1,12 +1,14 @@
+import { usePostSignup } from "@apis/hooks";
+import { PATH } from "@routes/PATH";
 import Header from "@shared/components/Header/Header";
 import InputController from "@shared/components/InputController/InputController";
 import Loading from "@shared/components/Loading/Loading";
 import RadioController from "@shared/components/RadioController/RadioController";
 import { passwordSchema } from "@shared/schema";
 import { phoneNumberFormatter, phoneNumberUnformatter } from "@shared/utils";
-
 import { useRef, useState } from "react";
 import { Lock, Mail, Phone, User } from "react-feather";
+import { useNavigate } from "react-router";
 import { Button, Container, Text } from "reshaped";
 import * as styles from "./Signup.css";
 
@@ -16,16 +18,17 @@ async function fetchItems() {
 }
 
 function SignUp() {
+	const navigate = useNavigate();
+
 	const nameValueRef = useRef("");
 	const emailValueRef = useRef("");
 	const phoneNumberValueRef = useRef("");
 	const passwordValueRef = useRef("");
-	const memberTypeRef = useRef("");
+	const memberTypeRef = useRef<"tutor" | "tutee" | "">("");
 
-	const [isLoading, setIsLoading] = useState(false);
-	fetchItems();
+	const { mutateAsync: signup, isPending } = usePostSignup();
 
-	const handleSubmit = () => {
+	const handleSubmit = async () => {
 		if (
 			!nameValueRef.current ||
 			!emailValueRef.current ||
@@ -37,14 +40,20 @@ function SignUp() {
 			return;
 		}
 
-		setIsLoading(true);
-		console.log({
-			nameValueRef: nameValueRef.current,
-			emailValueRef: emailValueRef.current,
-			phoneNumber: phoneNumberUnformatter(phoneNumberValueRef.current),
-			passwordValueRef: passwordValueRef.current,
-			memberTypeRef: memberTypeRef.current,
-		});
+		if (memberTypeRef.current) {
+			try {
+				await signup({
+					name: nameValueRef.current,
+					email: emailValueRef.current,
+					phoneNumber: phoneNumberUnformatter(phoneNumberValueRef.current),
+					password: passwordValueRef.current,
+					memberType: memberTypeRef.current,
+				});
+				await navigate(PATH.APPLY_COURSE.ROOT);
+			} catch (error) {
+				console.error(error);
+			}
+		}
 	};
 
 	return (
@@ -82,7 +91,7 @@ function SignUp() {
 					size={"xlarge"}
 					onClick={handleSubmit}
 				>
-					{isLoading ? (
+					{isPending ? (
 						<Loading color="white" size="medium" ariaLabel="Loading" />
 					) : (
 						<Text variant={"featured-2"}>회원가입</Text>

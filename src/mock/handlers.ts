@@ -267,6 +267,8 @@ export const handlers = [
 
 		memeberDB.push(newMember);
 
+		//1.5초 후 응답
+		await new Promise((resolve) => setTimeout(resolve, 1500));
 		return HttpResponse.json({
 			code: 200,
 			message: "success",
