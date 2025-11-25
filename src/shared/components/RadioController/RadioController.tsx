@@ -24,8 +24,13 @@ function RadioController(props: RadioControllerProps) {
 			<View direction={"row"} gap={2} className={styles.radioController}>
 				<RadioGroup name={name} onChange={onChange}>
 					{radioItems.map((item, idx) => (
-						<Radio key={`${item.value}-${idx}`} size="large" value={item.value}>
-							{item.label}
+						<Radio
+							key={`${item.value}-${idx}`}
+							size="large"
+							value={item.value}
+							className={styles.radio}
+						>
+							<Text variant={"featured-2"}>{item.label}</Text>
 						</Radio>
 					))}
 				</RadioGroup>

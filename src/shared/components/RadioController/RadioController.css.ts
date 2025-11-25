@@ -15,3 +15,9 @@ export const radioController = style({
 export const radioControllerLabel = style({
 	marginBottom: "1rem",
 });
+
+export const radio = style({
+	vars: {
+		"--rs-radio-line-height": "2rem ",
+	},
+});
