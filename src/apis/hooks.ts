@@ -58,10 +58,10 @@ export const usePostApplyCourse = () => {
 	});
 };
 
-export const usePostCreateCourse = (body: CourseCreationType) => {
+export const usePostCreateCourse = () => {
 	const queryClient = useQueryClient();
 	return useMutation({
-		mutationFn: () => apis.postCreateCourse(body),
+		mutationFn: (body: CourseCreationType) => apis.postCreateCourse(body),
 		onSuccess: () => {
 			queryClient.invalidateQueries({
 				queryKey: queryKeys.GET_COURSES_QUERY_KEY(),
