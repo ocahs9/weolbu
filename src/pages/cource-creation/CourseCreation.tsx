@@ -41,6 +41,11 @@ function CourseCreation() {
 			return;
 		}
 
+		if (!courseTitle.current || !numberOfStudents.current || !price.current) {
+			alert("모든 필수 정보를 올바르게 입력해주세요.");
+			return;
+		}
+
 		await createCourse({
 			title: courseTitle.current,
 			maxOfStudents: Number(numberOfStudents.current),
