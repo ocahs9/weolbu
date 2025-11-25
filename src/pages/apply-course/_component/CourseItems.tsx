@@ -1,5 +1,6 @@
 import { useInfiniteGetCourses } from "@apis/hooks";
 import type { Course } from "@apis/types";
+import { applySorts } from "@shared/types/types";
 import { priceFormatter } from "@shared/utils";
 import { useEffect, useMemo, useRef } from "react";
 import { Card, Checkbox, Text, View } from "reshaped";
@@ -20,12 +21,14 @@ function CourseItems(props: CourseItemsProps) {
 		limit: 10,
 	});
 
-	// const renderedCourses = useMemo(() => {
-	// 	return applySort(
-	// 		data?.pages.map((page) => page.courses.map),
-	// 		selectedSorts,
-	// 	);
-	// }, [selectedSorts]);
+	// 모든 페이지의 코스를 하나의 배열로 합치고 정렬 적용
+	const renderedCourses = useMemo(() => {
+		const allCourses = data?.pages.flatMap((page) => page.courses) ?? [];
+		return applySorts(allCourses, selectedSorts);
+	}, [data?.pages, selectedSorts]);
+
+	console.log("selectedSorts:", selectedSorts);
+	console.log("renderedCourses:", renderedCourses);
 
 	const observerRef = useRef<IntersectionObserver | null>(null);
 	const loadMoreRef = useRef<HTMLDivElement>(null);
@@ -50,22 +53,18 @@ function CourseItems(props: CourseItemsProps) {
 
 	return (
 		<View className={styles.courseItemsContainer}>
-			{data?.pages.map((page) =>
-				page.courses.map((course) => (
-					<CourseCard
-						key={course.courseId}
-						courseName={course.title}
-						coursePrice={course.price}
-						courseTutor={course.tutorName}
-						numberOfStudents={course.numberOfStudents}
-						maxOfStudents={course.maxOfStudents}
-						selected={selectedCourses.some(
-							(c) => c.courseId === course.courseId,
-						)}
-						onClick={() => handleSelectCourse(course)}
-					/>
-				)),
-			)}
+			{renderedCourses.map((course) => (
+				<CourseCard
+					key={course.courseId}
+					courseName={course.title}
+					coursePrice={course.price}
+					courseTutor={course.tutorName}
+					numberOfStudents={course.numberOfStudents}
+					maxOfStudents={course.maxOfStudents}
+					selected={selectedCourses.some((c) => c.courseId === course.courseId)}
+					onClick={() => handleSelectCourse(course)}
+				/>
+			))}
 			<div ref={loadMoreRef} />
 		</View>
 	);
@@ -93,9 +92,6 @@ function CourseCard(props: CourseCardProps) {
 		selected,
 		onClick,
 	} = props;
-
-	console.log(coursePrice);
-	console.log(typeof coursePrice);
 
 	return (
 		<Card
