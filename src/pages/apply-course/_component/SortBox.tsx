@@ -24,7 +24,7 @@ function SortBox(props: FilterBoxProps) {
 						handleSortChange(value);
 					}}
 				>
-					<Text variant={"featured-3"}>{item.label}</Text>
+					<Text variant={"body-2"}>{item.label}</Text>
 				</Checkbox>
 			))}
 		</View>

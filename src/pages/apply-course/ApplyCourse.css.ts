@@ -20,6 +20,11 @@ export const addCourseBtnWrapper = style({
 	position: "fixed",
 	top: "1.5rem",
 	right: "40%",
+	"@media": {
+		"screen and (max-width: 768px)": {
+			right: "10%",
+		},
+	},
 });
 
 export const addCourseBtn = style({

@@ -7,11 +7,11 @@ export const courseItemsContainer = style({
 
 	alignItems: "center",
 	marginTop: "3rem",
-	width: "100%",
+
 	height: "40rem",
 	padding: "1%",
 
-	overflowY: "scroll",
+	overflowY: "auto",
 });
 
 export const cardClass = style({
