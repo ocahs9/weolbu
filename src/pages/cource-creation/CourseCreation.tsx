@@ -15,9 +15,6 @@ import { Button, Container, Text } from "reshaped";
 import ProtectedPage from "../../shared/components/ProtectedRouteCreationPage";
 import * as styles from "./CourseCreation.css";
 
-//todo: 강의 목록에서 넘어오고, 등록 완료 후 다시 강의 목록으로 넘어가는 로직 구현
-//todo: 수강생 회원은 등록 불가 -> 수강생인지 여부를 파악하는 로직 필요
-
 function CourseCreation() {
 	const courseTitle = useRef("");
 	const numberOfStudents = useRef("");

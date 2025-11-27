@@ -20,31 +20,35 @@ function InputController(props: InputControllerProps) {
 		label,
 		placeholder,
 		valueRef,
-		schema,
+		schema, //에러 여부 판단에 사용하는 스키마
 		inputAttributes,
 		icon,
-		formatter,
+		formatter, //실시간 포맷팅에 사용하는 함수 - controlled로 변환 
 		suffix,
 	} = props;
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 	const [controlledValue, setControlledValue] = useState<string>("");
 
 	const onChange = ({ value }: { value: string }) => {
-		if (formatter) {
-			setControlledValue(formatter(value));
-			valueRef.current = formatter(value);
-			return;
-		}
-
-		valueRef.current = value;
+		let isError = false;
 		if (schema) {
 			const result = schema.safeParse(value);
 			if (!result.success) {
 				setErrorMessage(result.error.issues[0].message);
+				isError = true;
 			} else {
 				setErrorMessage(null);
 			}
 		}
+
+		if (formatter) {
+			setControlledValue(formatter(value));
+			valueRef.current = formatter(value)
+		}else{
+			valueRef.current = value;
+		}
+
+		if(isError) valueRef.current = ""
 	};
 
 	return (
